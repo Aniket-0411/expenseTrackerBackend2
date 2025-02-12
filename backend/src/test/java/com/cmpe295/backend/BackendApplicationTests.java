@@ -1,10 +1,10 @@
-package com.cmpe295.expensetracker;
+package com.cmpe295.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ExpensetrackerApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {

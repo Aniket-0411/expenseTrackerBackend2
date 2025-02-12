@@ -1,13 +1,13 @@
-package com.cmpe295.expensetracker;
+package com.cmpe295.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExpensetrackerApplication {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExpensetrackerApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }
