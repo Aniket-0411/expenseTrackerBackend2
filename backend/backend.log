@@ -1,0 +1,68 @@
+2025-02-14T01:04:46.451-08:00  INFO 16440 --- [backend] [main] com.cmpe295.backend.BackendApplication   : Starting BackendApplication using Java 17.0.8 with PID 16440 (C:\Users\yffan\Documents\VScodeProject\Web\expense-tracker\backend\target\classes started by yffan in C:\Users\yffan\Documents\VScodeProject\Web\expense-tracker\backend)
+2025-02-14T01:04:46.454-08:00  INFO 16440 --- [backend] [main] com.cmpe295.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-02-14T01:04:46.994-08:00  INFO 16440 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-14T01:04:47.053-08:00  INFO 16440 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 48 ms. Found 1 JPA repository interface.
+2025-02-14T01:04:47.543-08:00  INFO 16440 --- [backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-02-14T01:04:47.557-08:00  INFO 16440 --- [backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-14T01:04:47.557-08:00  INFO 16440 --- [backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-14T01:04:47.611-08:00  INFO 16440 --- [backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-14T01:04:47.611-08:00  INFO 16440 --- [backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1117 ms
+2025-02-14T01:04:47.751-08:00  INFO 16440 --- [backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-02-14T01:04:47.811-08:00  INFO 16440 --- [backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-02-14T01:04:47.843-08:00  INFO 16440 --- [backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-02-14T01:04:48.185-08:00  INFO 16440 --- [backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-14T01:04:48.227-08:00  INFO 16440 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-14T01:04:48.598-08:00  INFO 16440 --- [backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@782ac148
+2025-02-14T01:04:48.601-08:00  INFO 16440 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-02-14T01:04:48.643-08:00  INFO 16440 --- [backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 3.49
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-02-14T01:04:49.345-08:00  INFO 16440 --- [backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-02-14T01:04:49.374-08:00  INFO 16440 --- [backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-14T01:04:49.590-08:00  WARN 16440 --- [backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-14T01:04:49.891-08:00  INFO 16440 --- [backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-02-14T01:04:49.902-08:00  INFO 16440 --- [backend] [main] com.cmpe295.backend.BackendApplication   : Started BackendApplication in 3.869 seconds (process running for 4.375)
+2025-02-14T01:05:14.511-08:00  INFO 16440 --- [backend] [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [g_state={"i_t":1733208152917,"i_l":0}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-02-14T01:05:14.516-08:00  INFO 16440 --- [backend] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-14T01:05:14.517-08:00  INFO 16440 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-02-14T01:05:14.518-08:00  INFO 16440 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-02-14T01:11:13.334-08:00  INFO 15920 --- [backend] [main] com.cmpe295.backend.BackendApplication   : Starting BackendApplication using Java 17.0.8 with PID 15920 (C:\Users\yffan\Documents\VScodeProject\Web\expense-tracker\backend\target\classes started by yffan in C:\Users\yffan\Documents\VScodeProject\Web\expense-tracker\backend)
+2025-02-14T01:11:13.338-08:00  INFO 15920 --- [backend] [main] com.cmpe295.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-02-14T01:11:13.908-08:00  INFO 15920 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-14T01:11:13.965-08:00  INFO 15920 --- [backend] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 1 JPA repository interface.
+2025-02-14T01:11:14.430-08:00  INFO 15920 --- [backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-02-14T01:11:14.443-08:00  INFO 15920 --- [backend] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-02-14T01:11:14.444-08:00  INFO 15920 --- [backend] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-14T01:11:14.506-08:00  INFO 15920 --- [backend] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-02-14T01:11:14.507-08:00  INFO 15920 --- [backend] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1129 ms
+2025-02-14T01:11:14.654-08:00  INFO 15920 --- [backend] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-02-14T01:11:14.718-08:00  INFO 15920 --- [backend] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2025-02-14T01:11:14.749-08:00  INFO 15920 --- [backend] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-02-14T01:11:15.022-08:00  INFO 15920 --- [backend] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-14T01:11:15.056-08:00  INFO 15920 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-02-14T01:11:15.426-08:00  INFO 15920 --- [backend] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@22fb9a2c
+2025-02-14T01:11:15.428-08:00  INFO 15920 --- [backend] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-02-14T01:11:15.469-08:00  INFO 15920 --- [backend] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 3.49
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-02-14T01:11:16.148-08:00  INFO 15920 --- [backend] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-02-14T01:11:16.176-08:00  INFO 15920 --- [backend] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-14T01:11:16.376-08:00  WARN 15920 --- [backend] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-14T01:11:16.713-08:00  INFO 15920 --- [backend] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-02-14T01:11:16.722-08:00  INFO 15920 --- [backend] [main] com.cmpe295.backend.BackendApplication   : Started BackendApplication in 3.798 seconds (process running for 4.284)
+2025-02-14T01:11:19.928-08:00  INFO 15920 --- [backend] [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [g_state={"i_t":1733208152917,"i_l":0}] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2025-02-14T01:11:19.933-08:00  INFO 15920 --- [backend] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-14T01:11:19.934-08:00  INFO 15920 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-02-14T01:11:19.935-08:00  INFO 15920 --- [backend] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
