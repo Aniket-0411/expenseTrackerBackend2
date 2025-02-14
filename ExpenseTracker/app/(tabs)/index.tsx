@@ -1,4 +1,4 @@
-import Login from "@/src/components/Login";
+import Login from "@/src/pages/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
