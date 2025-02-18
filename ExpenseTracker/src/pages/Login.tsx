@@ -1,13 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-
-const Login = () => {
-  return (
-    <View>
-      <Text>Login</Text>
-    </View>
-  )
-}import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomText from '../components/CustomText';
 import CustomBox from '../components/CustomBox';
@@ -187,7 +178,3 @@ const buttonBox = {
     borderRadius: 10,
   },
 };
-
-export default Login
-
-const styles = StyleSheet.create({})
