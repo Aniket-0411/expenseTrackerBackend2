@@ -14,7 +14,7 @@ const Login = ({navigation}) => {
   const loginService = new LoginService();
 
   const refreshToken = async () => {
-    const SERVER_BASE_URL = "http://Expens-KongA-ChasZNdaOM4K-1208155051.ap-south-1.elb.amazonaws.com";
+    const SERVER_BASE_URL = process.env.SERVER_URL;
     console.log('Inside Refresh token');
     const refreshToken = await AsyncStorage.getItem('refreshToken');
     const response = await fetch(`${SERVER_BASE_URL}/auth/v1/refreshToken`, {
@@ -44,7 +44,7 @@ const Login = ({navigation}) => {
   };
 
   const gotoHomePageWithLogin = async () => {
-    const SERVER_BASE_URL = "http://Expens-KongA-ChasZNdaOM4K-1208155051.ap-south-1.elb.amazonaws.com";
+    const SERVER_BASE_URL = process.env.SERVER_URL;
     const response = await fetch(`${SERVER_BASE_URL}/auth/v1/login`, {
       method: 'POST',
       headers: {

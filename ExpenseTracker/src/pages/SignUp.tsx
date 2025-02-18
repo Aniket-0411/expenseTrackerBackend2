@@ -16,7 +16,7 @@ const SignUp = ({navigation}) => {
   
   const navigateToLoginScreen = async () => {
     try {
-      const SERVER_BASE_URL = "http://Expens-KongA-ChasZNdaOM4K-1208155051.ap-south-1.elb.amazonaws.com";
+      const SERVER_BASE_URL = process.env.SERVER_URL;
       const response = await fetch(`${SERVER_BASE_URL}/auth/v1/signup`, {
         method: 'POST',
         headers: {
