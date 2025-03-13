@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods, require_POST
 from .models import ChatMessage
 from django.views.decorators.csrf import csrf_exempt
@@ -55,7 +55,11 @@ def get_rasa_response(request):
         payload = {"sender": sender, "message": message}
         rasa_endpoint = "http://localhost:5005/webhooks/rest/webhook"  # update if needed
         logger.info("Sending payload to Rasa: %s", payload)
-        rasa_resp = requests.post(rasa_endpoint, json=payload, timeout=10)
+        try:
+            rasa_resp = requests.post(rasa_endpoint, json=payload, timeout=60)
+        except requests.exceptions.ReadTimeout:
+            # Handle timeout error gracefully
+            return HttpResponse("Rasa server timeout. Please try again later.", status=504)
         logger.info("Rasa response status code: %s", rasa_resp.status_code)
         if rasa_resp.status_code == 200:
             responses = rasa_resp.json()
@@ -68,6 +72,7 @@ def get_rasa_response(request):
     except Exception as e:
         logger.exception("Exception in get_rasa_response")
         return JsonResponse({"status": "error", "error": str(e)}, status=500)
+    
 
 @require_http_methods(["GET"])
 def get_category_data(request):

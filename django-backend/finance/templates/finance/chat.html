@@ -55,6 +55,8 @@
     <!-- Load Chart.js and plugins once here -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <!-- add markdown display -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <div class="mx-auto p-5 flex space-x-4">
@@ -140,7 +142,12 @@
             const bubble = document.createElement('div');
             bubble.className = "fade-in hover-scale p-2 rounded-xl m-2 max-w-[60%] border border-gray-300 " +
                 (sender === "user" ? "bg-[#d1e7dd] self-end" : "bg-[#e2e3e5] self-start");
-            bubble.textContent = message;
+            // Modified: render markdown for bot messages instead of plain text
+            if (sender === "bot") {
+                bubble.innerHTML = marked.parse(message);
+            } else {
+                bubble.textContent = message;
+            }
             chatMessages.appendChild(bubble);
             document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
             if (!fromHistory) {
