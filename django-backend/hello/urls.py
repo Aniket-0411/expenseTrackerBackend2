@@ -12,6 +12,5 @@ urlpatterns = [
     path("", home_list_view, name="home"),
     path("about/", views.about, name="about"),
     path("log/", views.log_message, name="log"),
-
 ]
 
