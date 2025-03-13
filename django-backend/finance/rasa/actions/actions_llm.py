@@ -5,6 +5,11 @@ from rasa_sdk import Action, Tracker
 import django
 import os
 import sys
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.environ.get("deepseekAPI")
+
+
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '../../../')))
 # Configure Django settings if required
@@ -13,7 +18,7 @@ django.setup()
 
 # ...existing imports...
 
-client = OpenAI(api_key="sk-6e4c55653ae348948f2d79eed0309bce",
+client = OpenAI(api_key=api_key,
                 base_url="https://api.deepseek.com")
 
 

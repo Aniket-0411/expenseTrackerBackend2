@@ -13,9 +13,13 @@ from finance.models import Finance, ChatMessage
 from asgiref.sync import sync_to_async
 from openai import OpenAI
 from django.db.models import Sum, Avg
+from dotenv import load_dotenv
+load_dotenv()
+
+api_key = os.environ.get("deepseekAPI")
 
 
-client = OpenAI(api_key="sk-6e4c55653ae348948f2d79eed0309bce", base_url="https://api.deepseek.com")
+client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
 class ActionFetchFinanceData(Action):
     def name(self) -> Text:
         return "action_fetch_finance_data"
