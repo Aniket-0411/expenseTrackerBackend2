@@ -1,0 +1,44 @@
+<div class="p-5 bg-white rounded-lg shadow-lg border border-gray-300 h-full">
+    <h2 class="text-xl font-bold mb-4">
+        {% if type == "Income" %}
+            Income Amount per Category
+        {% else %}
+            Expense Amount per Category
+        {% endif %}
+    </h2>
+    <!-- set a unique canvas id by appending the type (lowercase) -->
+    <canvas id="verticalBarChart_{{ type|lower }}" style="height: 100%; width: 100%;" class="pb-5"></canvas>
+</div>
+<script>
+    // ...existing code...
+    fetch("{% url 'api_category_amount_data' %}?type={{ type|default:'Expense' }}")
+        .then(res => res.json())
+        .then(data => {
+            const canvasId = "verticalBarChart_{{ type|lower }}";
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const labels = data.map(item => item.category);
+            const totals = data.map(item => item.total);
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '{% if type == "Income" %}Total Income{% else %}Total Expense{% endif %}',
+                        data: totals,
+                        backgroundColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    indexAxis: 'y'
+                }
+            });
+        })
+        .catch(err => console.error(err));
+    // ...existing code...
+</script>

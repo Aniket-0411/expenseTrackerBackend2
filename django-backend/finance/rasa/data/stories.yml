@@ -1,0 +1,15 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: Fetch finance transactions
+  steps:
+    - intent: fetch_finance_data
+    - action: action_fetch_finance_data
