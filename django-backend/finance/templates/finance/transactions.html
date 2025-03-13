@@ -1,0 +1,121 @@
+<div class="p-5 bg-white rounded-lg shadow-lg border border-gray-300 h-full">
+	<h2 class="text-xl font-bold mb-4">Recent Transactions</h2>
+	<!-- Filter and Sort Form -->
+	<form id="filter-form" method="get" class="mb-4">
+		<input type="text" name="filter" placeholder="Filter by category" value="{{ filter }}" class="border p-2" />
+		<!-- The original sort select is removed in favor of column header sorting -->
+		<button type="submit" class="bg-blue-500 text-white p-2">Apply</button>
+	</form>
+	<!-- Transactions Table -->
+	<table class="min-w-full divide-y divide-gray-200">
+		<thead class="bg-gray-50">
+			<tr>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-field="date">Date <span class="sort-arrow"></span></th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-field="category">Category <span class="sort-arrow"></span></th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-field="amount">Amount <span class="sort-arrow"></span></th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-field="type">Type <span class="sort-arrow"></span></th>
+				<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-field="description">Description <span class="sort-arrow"></span></th>
+			</tr>
+		</thead>
+		<tbody id="transactions-tbody" class="bg-white divide-y divide-gray-200">
+			<!-- Will be populated by JS -->
+		</tbody>
+	</table>
+	<!-- Pagination Controls -->
+	<div id="pagination-controls" class="mt-4">
+		<!-- Will be populated by JS -->
+	</div>
+</div>
+
+<script>
+// filepath: c:\Users\yffan\Documents\VScodeProject\Web\expense-tracker\django-backend\finance\templates\finance\transactions.html
+// Global sort settings
+let orderBy = 'date';
+let direction = 'desc';
+
+function updateSortIcons() {
+  document.querySelectorAll('th.sortable').forEach(th => {
+    const field = th.getAttribute('data-field');
+    const arrowSpan = th.querySelector('.sort-arrow');
+    arrowSpan.innerText = (field === orderBy) ? (direction === 'asc' ? ' ▲' : ' ▼') : '';
+  });
+}
+
+function loadTransactions(page = 1) {
+  const form = document.getElementById('filter-form');
+  const formData = new FormData(form);
+  const filter = formData.get('filter');
+  const url = `/api/transactions/?page=${page}&filter=${encodeURIComponent(filter)}&order_by=${orderBy}&direction=${direction}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById('transactions-tbody');
+      tbody.innerHTML = "";
+      if (data.transactions.length) {
+        data.transactions.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap">${item.counter}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.date}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.category}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.amount}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.type}</td>
+            <td class="px-6 py-4 whitespace-nowrap">${item.description}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="border p-2 text-center">No transactions found.</td></tr>`;
+      }
+      const pagination = document.getElementById('pagination-controls');
+      pagination.innerHTML = "";
+      if (data.has_previous) {
+        const prev = document.createElement('a');
+        prev.href = "#";
+        prev.className = "p-2 ml-2 px-6 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700";
+        prev.innerText = "Previous";
+        prev.addEventListener('click', e => { e.preventDefault(); loadTransactions(data.previous_page_number); });
+        pagination.appendChild(prev);
+      }
+      const pageSpan = document.createElement('span');
+      pageSpan.className = "p-2";
+      pageSpan.innerText = `Page ${data.page} of ${data.total_pages}`;
+      pagination.appendChild(pageSpan);
+      if (data.has_next) {
+        const next = document.createElement('a');
+        next.href = "#";
+        next.className = "p-2 ml-2 px-6 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700";
+        next.innerText = "Next";
+        next.addEventListener('click', e => { e.preventDefault(); loadTransactions(data.next_page_number); });
+        pagination.appendChild(next);
+      }
+      updateSortIcons();
+    });
+}
+
+// Add click listeners to sortable headers
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.style.cursor = "pointer";
+  th.addEventListener('click', () => {
+    const field = th.getAttribute('data-field');
+    // If clicking the same column, toggle direction; else, reset to ascending.
+    if (orderBy === field) {
+      direction = (direction === 'asc') ? 'desc' : 'asc';
+    } else {
+      orderBy = field;
+      direction = 'asc';
+    }
+    loadTransactions(1);
+  });
+});
+
+document.getElementById('filter-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  loadTransactions(1);
+});
+
+// Initial load
+updateSortIcons();
+loadTransactions();
+</script>

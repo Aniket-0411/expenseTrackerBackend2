@@ -5,6 +5,9 @@ from django.views.decorators.http import require_http_methods, require_POST
 from .models import ChatMessage
 from django.views.decorators.csrf import csrf_exempt
 import requests
+from django.db.models import Count, Sum
+from .models import Finance
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -56,3 +59,66 @@ def get_rasa_response(request):
             return JsonResponse({"status": "error", "error": "Rasa error"}, status=500)
     except Exception as e:
         return JsonResponse({"status": "error", "error": str(e)}, status=500)
+
+@require_http_methods(["GET"])
+def get_category_data(request):
+    # get category data
+    data = list(Finance.objects.values('category').annotate(count=Count('category')))
+    return JsonResponse(data, safe=False)
+
+@require_http_methods(["GET"])
+def get_category_amount_data(request):
+    trans_type = request.GET.get("type", "Expense")
+    if trans_type not in ["Expense", "Income"]:
+        trans_type = "Expense"
+    data = list(Finance.objects.filter(type=trans_type)
+                .values('category')
+                .annotate(total=Sum('amount'))
+                .order_by('-total'))
+    return JsonResponse(data, safe=False)
+
+    
+
+def transactions_api(request):
+    filter_val = request.GET.get('filter', '')
+    order_by = request.GET.get('order_by', 'date')
+    direction = request.GET.get('direction', 'desc')
+    page_number = request.GET.get('page', 1)
+
+    valid_fields = {
+        'date': 'date',
+        'category': 'category',
+        'amount': 'amount',
+        'type': 'type',
+        'description': 'transaction_Description'
+    }
+    sort_field = valid_fields.get(order_by, 'date')
+    sort_prefix = '' if direction == 'asc' else '-'
+    
+    qs = Finance.objects.all()
+    if filter_val:
+        qs = qs.filter(category__icontains=filter_val)
+    qs = qs.order_by(f"{sort_prefix}{sort_field}")
+
+    paginator = Paginator(qs, 5)
+    page_obj = paginator.get_page(page_number)
+    transactions = []
+    for i, trans in enumerate(page_obj.object_list, start=1):
+        transactions.append({
+            'counter': i,
+            'date': trans.date.strftime('%Y-%m-%d %H:%M:%S'),
+            'category': trans.category,
+            'amount': trans.amount,
+            'type': trans.type,
+            'description': trans.transaction_Description
+        })
+    data = {
+        'transactions': transactions,
+        'page': page_obj.number,
+        'total_pages': paginator.num_pages,
+        'has_previous': page_obj.has_previous(),
+        'has_next': page_obj.has_next(),
+        'previous_page_number': page_obj.previous_page_number() if page_obj.has_previous() else None,
+        'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
+    }
+    return JsonResponse(data)
