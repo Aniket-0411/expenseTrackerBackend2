@@ -157,10 +157,33 @@
             const text = promptInput.value;
             if (text.trim() === '') return;
             addMessage(text, 'user');
-            // Simulate bot response
-            setTimeout(() => {
-                addMessage("Response: " + text, 'bot');
-            }, 1000);
+            
+            // Call Rasa's endpoint to get the bot's response
+            fetch('/get_rasa_response/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ message: text, sender: 'user' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success' && data.responses) {
+                    data.responses.forEach(resp => {
+                        // Assuming each response contains a 'text' field
+                        if (resp.text) {
+                            addMessage(resp.text, 'bot');
+                        }
+                    });
+                } else {
+                    addMessage("Error: No valid response from Rasa", 'bot');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                addMessage("Error calling Rasa service", 'bot');
+            });
             promptInput.value = '';
         });
         

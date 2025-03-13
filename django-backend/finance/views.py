@@ -8,6 +8,9 @@ import requests
 from django.db.models import Count, Sum
 from .models import Finance
 from django.core.paginator import Paginator
+import logging
+from asgiref.sync import sync_to_async
+
 
 # Create your views here.
 
@@ -42,6 +45,7 @@ def clear_chat_history(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def get_rasa_response(request):
+    logger = logging.getLogger(__name__)
     try:
         data = json.loads(request.body)
         message = data.get("message", "")
@@ -50,14 +54,19 @@ def get_rasa_response(request):
             return JsonResponse({"status": "error", "error": "No message provided."}, status=400)
         payload = {"sender": sender, "message": message}
         rasa_endpoint = "http://localhost:5005/webhooks/rest/webhook"  # update if needed
-        rasa_resp = requests.post(rasa_endpoint, json=payload)
+        logger.info("Sending payload to Rasa: %s", payload)
+        rasa_resp = requests.post(rasa_endpoint, json=payload, timeout=10)
+        logger.info("Rasa response status code: %s", rasa_resp.status_code)
         if rasa_resp.status_code == 200:
             responses = rasa_resp.json()
-            # Optionally, you can also save the bot responses to ChatMessage model here.
+            logger.info("Rasa responses: %s", responses)
             return JsonResponse({"status": "success", "responses": responses})
         else:
-            return JsonResponse({"status": "error", "error": "Rasa error"}, status=500)
+            error_msg = f"Rasa error {rasa_resp.status_code}: {rasa_resp.text}"
+            logger.error(error_msg)
+            return JsonResponse({"status": "error", "error": error_msg}, status=500)
     except Exception as e:
+        logger.exception("Exception in get_rasa_response")
         return JsonResponse({"status": "error", "error": str(e)}, status=500)
 
 @require_http_methods(["GET"])
