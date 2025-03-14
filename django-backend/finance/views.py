@@ -10,7 +10,8 @@ from .models import Finance
 from django.core.paginator import Paginator
 import logging
 from asgiref.sync import sync_to_async
-
+from PIL import Image
+import io
 
 # Create your views here.
 
@@ -37,6 +38,7 @@ def get_chat_history(request):
     data = [{"message": m.message, "sender": m.sender} for m in messages]
     return JsonResponse(data, safe=False)
 
+@csrf_exempt
 @require_POST
 def clear_chat_history(request):
     ChatMessage.objects.all().delete()
@@ -64,7 +66,6 @@ def get_rasa_response(request):
         if rasa_resp.status_code == 200:
             responses = rasa_resp.json()
             logger.info("Rasa responses: %s", responses)
-            print(responses)
             return JsonResponse({"status": "success", "responses": responses})
         else:
             error_msg = f"Rasa error {rasa_resp.status_code}: {rasa_resp.text}"
@@ -137,3 +138,41 @@ def transactions_api(request):
         'next_page_number': page_obj.next_page_number() if page_obj.has_next() else None,
     }
     return JsonResponse(data)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def accept_image(request):
+    try:
+        if 'image' not in request.FILES:
+            return JsonResponse({"status": "error", "error": "No image provided."}, status=400)
+        # For demonstration, simply return a text acknowledgement.
+        
+        return JsonResponse({"status": "success", "text": "Image received"})
+    except Exception as e:
+        return JsonResponse({"status": "error", "error": str(e)}, status=500)
+    
+@csrf_exempt
+@require_http_methods(["POST"])
+def process_text_from_flask(request):
+    try:
+        data = json.loads(request.body)
+        text = data.get("text", "")
+        if not text:
+            return JsonResponse({"status": "error", "error": "No text provided."}, status=400)
+        
+        # Send the extracted text to Rasa for processing.
+        rasa_endpoint = "http://localhost:5005/webhooks/rest/webhook"
+        payload = {
+            "sender": "user",  # identifier for this sender
+            "message": text
+        }
+        
+        rasa_resp = requests.post(rasa_endpoint, json=payload, timeout=60)
+        if rasa_resp.status_code != 200:
+            error_msg = f"Rasa error {rasa_resp.status_code}: {rasa_resp.text}"
+            return JsonResponse({"status": "error", "error": error_msg}, status=500)
+        print(rasa_resp)
+        responses = rasa_resp.json()  # Expecting a list of response messages from Rasa.
+        return JsonResponse({"status": "success", "responses": responses})
+    except Exception as e:
+        return JsonResponse({"status": "error", "error": str(e)}, status=500)

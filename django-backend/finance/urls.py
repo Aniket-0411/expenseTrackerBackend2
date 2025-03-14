@@ -11,4 +11,6 @@ urlpatterns = [
     path('api/category-data/', views.get_category_data, name='api_category_data'),
     path('api/category-amount-data/', views.get_category_amount_data, name='api_category_amount_data'),
     path('api/transactions/', views.transactions_api, name='api_transactions'),
+    path('accept_image/', views.accept_image, name='accept_image'),
+    path('process_text_from_flask', views.process_text_from_flask, name='process_text_from_flask'),
 ]
