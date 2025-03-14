@@ -71,7 +71,8 @@ class ActionFetchFinanceData(Action):
             category_expenses = Finance.objects.filter(type="Expense").values("category").annotate(total=Sum("amount"))
             category_income = Finance.objects.filter(type="Income").values("category").annotate(total=Sum("amount"))
             return f"Total expenses: {total_expenses}\nTotal income: {total_income}\nAverage income: {avg_income}\nAverage expense: {avg_expense}\nCategory expenses: {category_expenses}\nCategory income: {category_income}"
-        
+        return input
+
     def get_recent_chat_messages(self):
         # Fetch the last 5 messages from ChatMessage ordered by creation time
         messages = list(ChatMessage.objects.all().order_by("-created_at")[:20])

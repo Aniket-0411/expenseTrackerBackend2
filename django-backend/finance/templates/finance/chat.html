@@ -165,6 +165,14 @@
             if (text.trim() === '') return;
             addMessage(text, 'user');
             
+            // Create and display a loading message (loading indicator)
+            const loadingBubble = document.createElement('div');
+            loadingBubble.id = "loading-indicator";
+            loadingBubble.className = "fade-in hover-scale p-2 rounded-xl m-2 max-w-[60%] border border-gray-300 bg-[#e2e3e5] self-start";
+            loadingBubble.textContent = "Loading...";
+            chatMessages.appendChild(loadingBubble);
+            document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+            
             // Call Rasa's endpoint to get the bot's response
             fetch('/get_rasa_response/', {
                 method: 'POST',
@@ -176,6 +184,8 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Remove the loading indicator
+                loadingBubble.remove();
                 if (data.status === 'success' && data.responses) {
                     data.responses.forEach(resp => {
                         // Assuming each response contains a 'text' field
@@ -189,6 +199,7 @@
             })
             .catch(err => {
                 console.error(err);
+                loadingBubble.remove();
                 addMessage("Error calling Rasa service", 'bot');
             });
             promptInput.value = '';

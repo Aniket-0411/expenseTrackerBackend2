@@ -64,6 +64,7 @@ def get_rasa_response(request):
         if rasa_resp.status_code == 200:
             responses = rasa_resp.json()
             logger.info("Rasa responses: %s", responses)
+            print(responses)
             return JsonResponse({"status": "success", "responses": responses})
         else:
             error_msg = f"Rasa error {rasa_resp.status_code}: {rasa_resp.text}"
