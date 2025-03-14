@@ -41,4 +41,10 @@ Start the app by running:
 python start.py
 ```
 
+## If you have Docker installed
+you just do docker-compose build
+make sure you have .env file ready
+
+      docker-compose up --build
+
 ...existing code...

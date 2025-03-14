@@ -10,8 +10,6 @@ from .models import Finance
 from django.core.paginator import Paginator
 import logging
 from asgiref.sync import sync_to_async
-from PIL import Image
-import io
 
 # Create your views here.
 

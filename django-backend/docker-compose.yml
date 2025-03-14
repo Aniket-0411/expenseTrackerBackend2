@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  flask:
+    build:
+      context: ../flask-OCR-service  # Adjust the path to your Flask directory
+      dockerfile: Dockerfile  
+    image: expense-tracker-flask
+    container_name: expense_tracker_flask
+    ports:
+      - "5000:5000"
+    env_file:
+      - ../flask-OCR-service/production.env  # Adjust the path to your Flask directory
+    
+  django:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: expense-tracker
+    container_name: expense_tracker
+    ports:
+      - "8000:8000"
+      - "5055:5055"
+      - "5005:5005"
+    depends_on:
+      - flask
+    env_file:
+      - .env
