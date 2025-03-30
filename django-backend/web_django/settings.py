@@ -63,6 +63,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://django:5005",
     "http://django:5055",
     "http://flask:5000",
+    "http://192.168.1.101:8000",
+    "http://10.0.2.2:8000",
+    "http://10.0.2.2:8081",
+    "http://192.168.1.101:8081",
 ]
 
 ROOT_URLCONF = "web_django.urls"
