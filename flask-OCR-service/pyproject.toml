@@ -1,13 +1,10 @@
 [project]
 name = "flask-app"
 version = "0.1.0"
-description = "A simple Flask application."
+description = "flask ocr "
 
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 [project.dependencies]
 dependencies = "requirements.txt"
-
-[project.optional-dependencies]
-dev-requirements = {file = "dev-requirements.txt"}
