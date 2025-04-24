@@ -1,6 +1,6 @@
 # Django APP for Smart Expense Tracker
 
-...existing code...
+
 
 ## Installation
 
@@ -22,7 +22,7 @@
    pip install -r requirements.txt
    ```
 
-...existing code...
+
 
 ## Database Migrations
 
@@ -32,7 +32,6 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-...existing code...
 
 ## Running the App
 
@@ -47,4 +46,4 @@ make sure you have .env file ready
 
       docker-compose up --build
 
-...existing code...
+

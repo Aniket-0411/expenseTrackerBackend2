@@ -15,7 +15,7 @@ def create_app(config):
             "methods": ["POST", "GET", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"]
         }
-    })
+    }, supports_credentials=True)  # Enable CORS for the app
 
     # Initialize Celery with the Flask app
     celery_init_app(app)

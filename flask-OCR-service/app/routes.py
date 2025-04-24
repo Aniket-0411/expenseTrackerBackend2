@@ -33,17 +33,16 @@ def accept_image():
         # Process image sent as byte array in JSON payload instead of file upload
         byte_array = request.json['image']  # list of ints
         image_bytes = bytes(byte_array)      # converting list of ints to bytes
-        # Convert byte array to PIL Image
-        """ image = Image.open(BytesIO(image_bytes)) """
-        # check image opened
-        if image_bytes is None:
-            error("Failed to open image from byte array")
     else:
         error("No valid image provided in either form-data or JSON payload")
-    task = process_image.delay(image_bytes)  # Call the Celery task asynchronously
-    extracted_text = task.get(timeout=30)
+    """ task = process_image.delay(image_bytes)
+    extracted_text = task.get(timeout=30) """
+    if not image_bytes:
+        error("No image bytes found")
+        return jsonify({"error": "No image provided"}), 400
+    image = Image.open(BytesIO(image_bytes))
+    extracted_text = pytesseract.image_to_string(image)
     print(f"Extracted text: {extracted_text}")
     # Send the result to Django backend API at route process_text_from_flask
-    if extracted_text is None or not extracted_text.strip():
-        extracted_text = "No text found in the image."
+    
     return jsonify({"sender": "bot", "text": extracted_text})

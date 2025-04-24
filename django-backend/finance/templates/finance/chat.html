@@ -289,10 +289,11 @@
             // Remove the loading indicator
             imageLoadingBubble.remove();
             if (data.status === 'success' && data.responses) {
+                console.log(data.responses);
                 data.responses.forEach(resp => {
                     // Assuming each response contains a 'text' field
                     if (resp.text) {
-                        addMessage(resp.text, 'bot');
+                        addMessage(resp.text, resp.sender || 'bot');
                     }
                 });
             } else {
