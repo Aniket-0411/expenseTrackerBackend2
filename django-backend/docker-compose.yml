@@ -10,7 +10,7 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - ../flask-OCR-service/production.env  # Adjust the path to your Flask directory
+      - ../flask-OCR-service/.env  # Adjust the path to your Flask directory
     
   django:
     build:
