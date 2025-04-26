@@ -47,7 +47,7 @@ def accept_image():
     extracted_text = pytesseract.image_to_string(image)
     print(f"Extracted text: {extracted_text}")
     # Send the result to Django backend API at route
-    django_api_url = current_app.config['FRONTEND_URL2'] + '/get_rasa_response/'
+    django_api_url = current_app.config['FRONTEND_URL'] + '/get_rasa_response/'
     try:
         resp = requests.post(django_api_url, json={"message": extracted_text, "sender": "user"})
         if resp.status_code == 200:
