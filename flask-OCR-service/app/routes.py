@@ -3,10 +3,12 @@ from .logger_utils import info, error  # Replace direct logger usage
 from PIL import Image
 from io import BytesIO
 import pytesseract
-#------tasks--------
+import requests
+# ------tasks--------
 from .task import process_image
 
 main = Blueprint('main', __name__)
+
 
 @main.route('/test/', methods=['GET'])
 def test():
@@ -15,8 +17,9 @@ def test():
     broker_url = celery['broker_url']
     print(f"Broker URL: {broker_url}")
     result_backend = celery['result_backend']
-    
+
     return jsonify({"status": "Flask is running"})
+
 
 @main.route('/accept_image/', methods=['POST'])
 def accept_image():
@@ -43,6 +46,15 @@ def accept_image():
     image = Image.open(BytesIO(image_bytes))
     extracted_text = pytesseract.image_to_string(image)
     print(f"Extracted text: {extracted_text}")
-    # Send the result to Django backend API at route process_text_from_flask
-    
-    return jsonify({"sender": "bot", "text": extracted_text})
+    # Send the result to Django backend API at route
+    django_api_url = current_app.config['FRONTEND_URL2'] + '/get_rasa_response/'
+    try:
+        resp = requests.post(django_api_url, json={"message": extracted_text, "sender": "user"})
+        if resp.status_code == 200:
+            res = resp.json()
+            print(f"Response from Django API: {res}")
+            return jsonify(res), 200
+    except requests.RequestException as e:
+        return jsonify({"error": "Failed to send request to Django API"}), 500
+
+    return jsonify({"error": "Failed to send request to Django API"}), 500

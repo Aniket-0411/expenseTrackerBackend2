@@ -288,15 +288,15 @@
         .then(data => {
             // Remove the loading indicator
             imageLoadingBubble.remove();
-            if (data.status === 'success' && data.responses) {
-                console.log(data.responses);
+            if (data.status === "success" && data.responses) {
                 data.responses.forEach(resp => {
                     // Assuming each response contains a 'text' field
                     if (resp.text) {
-                        addMessage(resp.text, resp.sender || 'bot');
+                        addMessage(resp.text, 'bot');
                     }
                 });
             } else {
+                console.log(data);
                 addMessage("Error: No valid response from Rasa", 'bot');
             }
         })
