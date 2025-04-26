@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y tesseract-ocr
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-ENV FLASK_APP=wsgi:app
+ENV FLASK_APP=wsgi:flask_app
 EXPOSE 5000
 CMD ["flask", "run"]
