@@ -45,16 +45,16 @@ def accept_image():
         return jsonify({"error": "No image provided"}), 400
     image = Image.open(BytesIO(image_bytes))
     extracted_text = pytesseract.image_to_string(image)
-    print(f"Extracted text: {extracted_text}")
+    info(f"Extracted text: {extracted_text}")
     # Send the result to Django backend API at route
-    django_api_url = current_app.config['FRONTEND_URL'] + '/get_rasa_response/'
+    django_api_url = f"{current_app.config['DJANGO_BACKEND_URL']}/get_rasa_response/"
     try:
         resp = requests.post(django_api_url, json={"message": extracted_text, "sender": "user"})
         if resp.status_code == 200:
             res = resp.json()
-            print(f"Response from Django API: {res}")
+            info(f"Response from Django API: {res}")
             return jsonify(res), 200
     except requests.RequestException as e:
-        return jsonify({"error": "Failed to send request to Django API"}), 500
+        return jsonify({"error": e}), 500
 
     return jsonify({"error": "Failed to send request to Django API"}), 500

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+FLASK_URL = os.environ.get("FLASK_URL", "http://localhost:5000")
 
 # Application definition
 
@@ -55,18 +60,18 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5000",
-    "http://localhost",
+    "http://127.0.0.1:5000",
+    "http://localhost:5000",
     "http://localhost:8000",
-    "http://localhost:8080",
+    "http://127.0.0.1:8000",
     "http://localhost:3000",
     "http://django:8000",
     "http://django:5005",
     "http://django:5055",
     "http://flask:5000",
-    "http://192.168.1.101:8000",
     "http://10.0.2.2:8000",
     "http://10.0.2.2:8081",
-    "http://192.168.1.101:8081",
+    os.environ.get("REACT_NATIVE_URL"),
 ]
 
 ROOT_URLCONF = "web_django.urls"

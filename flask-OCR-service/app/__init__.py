@@ -15,7 +15,7 @@ def create_app(config):
     
     CORS(app, resources={
         r"/*": {
-            "origins": [app.config['FRONTEND_URL'], app.config['FRONTEND_URL2']],
+            "origins": [app.config['FRONTEND_URL'], app.config['DJANGO_BACKEND_URL'],"http://localhost:8000"],
         }
     }, supports_credentials=True)  # Enable CORS for the app
 

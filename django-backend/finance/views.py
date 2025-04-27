@@ -9,12 +9,12 @@ from django.db.models import Count, Sum
 from .models import Finance
 from django.core.paginator import Paginator
 import logging
-from asgiref.sync import sync_to_async
+from django.conf import settings
 
 # Create your views here.
 
 def chat_view(request):
-    return render(request, 'finance/chat.html')
+    return render(request, 'finance/chat.html', {'FLASK_URL':settings.FLASK_URL})
 
 @csrf_exempt
 @require_http_methods(["POST"])

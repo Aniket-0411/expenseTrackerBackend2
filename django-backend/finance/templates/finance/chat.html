@@ -279,8 +279,9 @@
         const file = fileInput.files[0];
         const formData = new FormData();
         formData.append('image', file);
+        flask_url = "{{FLASK_URL}}";
 
-        fetch('http://localhost:5000/accept_image/', {
+        fetch(`${flask_url}/accept_image/`, {
             method: 'POST',
             body: formData
         })

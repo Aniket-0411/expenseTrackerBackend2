@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   flask:
     build:
@@ -11,6 +9,7 @@ services:
       - "5000:5000"
     env_file:
       - ../flask-OCR-service/.env  # Adjust the path to your Flask directory
+
     
   django:
     build:

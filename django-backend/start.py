@@ -44,7 +44,13 @@ def main():
     signal.signal(signal.SIGTERM, handle_exit)
 
     # Start Django server from root directory
-    p_django = start_process("python manage.py runserver 0.0.0.0:8000", cwd=".")
+    p_django = start_process(
+        "gunicorn web_django.wsgi:application "
+        "--bind 0.0.0.0:8000 "
+        "--workers 4 "
+        "--log-level info",
+        cwd="."
+    )
     processes.append(p_django)
 
     # Start Rasa Actions server from the subdirectory
