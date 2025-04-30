@@ -9,7 +9,7 @@ import os
 import sys
 from dotenv import load_dotenv
 load_dotenv()
-api_key = os.environ.get("deepseekAPI")
+api_key = os.environ.get("DEEPSEEK_API")
 
 
 sys.path.insert(0, os.path.abspath(

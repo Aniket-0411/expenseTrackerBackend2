@@ -7,8 +7,12 @@ services:
     container_name: expense_tracker_flask
     ports:
       - "5000:5000"
+    environment:
+      - DJANGO_BACKEND_URL=http://django:8000
+    networks:
+      - backend
     env_file:
-      - ../flask-OCR-service/.env  # Adjust the path to your Flask directory
+      - ../flask-OCR-service/.env  # Adjust the path to your .env file
 
     
   django:
@@ -23,5 +27,11 @@ services:
       - "5005:5005"
     depends_on:
       - flask
+    networks:
+      - backend
     env_file:
-      - .env
+      - .env  # Adjust the path to your .env file
+
+networks:
+  backend:
+    driver: bridge

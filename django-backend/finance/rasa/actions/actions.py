@@ -16,7 +16,7 @@ from django.db.models import Sum, Avg
 from dotenv import load_dotenv
 load_dotenv()
 
-api_key = os.environ.get("deepseekAPI")
+api_key = os.environ.get("DEEPSEEK_API")
 
 
 client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")

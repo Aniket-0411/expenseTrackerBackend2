@@ -6,4 +6,4 @@ celery_app = flask_app.extensions["celery"]
 
 if __name__ == "__main__":
     # Run the Flask app with the WSGI server
-    flask_app.run(host='localhost', port=5000, debug=True)
+    flask_app.run(host='0.0.0.0', port=5000, debug=True)
