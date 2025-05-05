@@ -39,7 +39,7 @@ class ActionOpenSourceLLM(Action):
             response = client.chat.completions.create(
                 model="deepseek-chat",
                 messages= [
-                    {"role": "system", "content": "You are a helpful personal finance assistant with conversation memory"},
+                    {"role": "system", "content": "You are a helpful personal finance assistant with conversation memory, the currency is in USD"},
                     {"role": "user", "content": input},
                     {"role": "assistant", "content": f"Recent conversation:\n{memory}"},
                 ],
