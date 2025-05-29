@@ -1,5 +1,11 @@
 # Django APP for Smart Expense Tracker
 
+**Dependencies**
+
+https://github.com/Aniket-0411/expenseTrackerFrontend
+
+https://github.com/Aniket-0411/expenseTrackerBackend
+
 ...existing code...
 
 ## Installation
